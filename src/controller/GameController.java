@@ -21,7 +21,7 @@ public class GameController {
 
     public void restartGame() {
         System.out.println("Do restart game here");
-    }
+    }//这里没有在游戏界面实现restart
 
     public boolean doMove(int row, int col, Direction direction) {
         if (model.getId(row, col) == 1) {

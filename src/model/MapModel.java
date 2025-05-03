@@ -34,4 +34,49 @@ public class MapModel {
     public boolean checkInHeightSize(int row) {
         return row >= 0 && row < matrix.length;
     }
+
+    public boolean canMove(int row, int col, Direction dir){
+        if (dir == Direction.LEFT){
+            if (getId(row, col) == 1||getId(row, col) == 2) return canSingleMove(row, col, dir);
+            if (getId(row, col) == 3||getId(row, col) == 4)
+                return (canSingleMove(row, col, dir) && canSingleMove(row + 1, col, dir));
+            else return false;
+        }
+        if (dir == Direction.RIGHT){
+            if (getId(row, col) == 1) return canSingleMove(row, col, dir);
+            if (getId(row, col) == 2) return canSingleMove(row, col + 1, dir);
+            if (getId(row, col) == 3)
+                return (canSingleMove(row, col, dir) && canSingleMove(row + 1, col, dir));
+            if (getId(row, col) == 4)
+                return (canSingleMove(row, col + 1, dir) && canSingleMove(row + 1, col +1, dir));
+            else return false;
+        }
+        if (dir == Direction.UP){
+            if (getId(row, col) == 1||getId(row, col) == 3) return canSingleMove(row, col, dir);
+            if (getId(row, col) == 2||getId(row, col) == 4)
+                return (canSingleMove(row, col, dir) && canSingleMove(row, col + 1, dir));
+            else return false;
+        }
+        if (dir == Direction.DOWN){
+            if (getId(row, col) == 1) return canSingleMove(row, col, dir);
+            if (getId(row, col) == 2)
+                return (canSingleMove(row, col, dir) && canSingleMove(row, col + 1, dir));
+            if (getId(row, col) == 3) return canSingleMove(row + 1, col, dir);
+            if (getId(row, col) == 4)
+                return (canSingleMove(row + 1, col, dir) && canSingleMove(row + 1, col +1, dir));
+            else return false;
+        }
+        else return false;
+    }
+    public boolean canSingleMove(int row, int col, Direction dir){//包含 Boundary Detection 和 Collision Detection
+        int newRow = row + dir.getRow();
+        int newCol = row + dir.getCol();
+        //Boundary Detection
+        if (!checkInHeightSize(newRow)) return false;
+        if (!checkInWidthSize(newCol)) return false;
+        //Collision Detection
+        int newId = getId(newRow, newCol);
+        return (newId == 0);
+    }
+
 }

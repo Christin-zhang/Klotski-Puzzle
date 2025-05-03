@@ -6,13 +6,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 /**
- * This class is only to enable key events.
+ * This class is only to enable key events.完成的就是事件触发的功能
  */
 public abstract class ListenerPanel extends JPanel {
     public ListenerPanel() {
         enableEvents(AWTEvent.KEY_EVENT_MASK);
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
-        this.setFocusable(true);
+        this.setFocusable(true);//对于键盘点击的事件一定要设置可聚焦
     }
 
     @Override
@@ -34,6 +34,7 @@ public abstract class ListenerPanel extends JPanel {
             doMouseClick(e.getPoint());
         }
     }
+    //以下抽象方法都需要下推到子类实现
     public abstract void doMouseClick(Point point);
 
     public abstract void doMoveRight();

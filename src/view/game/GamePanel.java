@@ -21,7 +21,7 @@ public class GamePanel extends ListenerPanel {
     private JLabel stepLabel;
     private int steps;
     private final int GRID_SIZE = 50;
-    private BoxComponent selectedBox;
+    private BoxComponent selectedBox;//记录哪一个箱子被选中
 
 
     public GamePanel(MapModel model) {
