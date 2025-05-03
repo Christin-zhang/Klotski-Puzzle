@@ -69,13 +69,13 @@ public class MapModel {
         else return false;
     }
     public boolean canSingleMove(int row, int col, Direction dir){//包含 Boundary Detection 和 Collision Detection
-        int newRow = row + dir.getRow();
-        int newCol = row + dir.getCol();
+        int nextRow = row + dir.getRow();
+        int nextCol = col + dir.getCol();
         //Boundary Detection
-        if (!checkInHeightSize(newRow)) return false;
-        if (!checkInWidthSize(newCol)) return false;
+        if (!checkInHeightSize(nextRow)) return false;
+        if (!checkInWidthSize(nextCol)) return false;
         //Collision Detection
-        int newId = getId(newRow, newCol);
+        int newId = getId(nextRow, nextCol);
         return (newId == 0);
     }
 

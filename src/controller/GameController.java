@@ -40,6 +40,14 @@ public class GameController {
                 }
             }
         }
+        if (model.getId(row, col) == 2){
+            if (model.canMove(row, col, direction)){
+                if (direction == Direction.UP || direction == Direction.DOWN){
+                    model.getMatrix()[row][col] = 0;
+                    model.getMatrix()[row][col + 1] = 0;
+                }
+            }
+        }
         return false;
     }
 
