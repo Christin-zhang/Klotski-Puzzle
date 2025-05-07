@@ -19,5 +19,8 @@ public class Main {
             gameFrame.setVisible(false);
             loginFrame.setGameFrame(gameFrame);
         });
+        UserManager userManager = new UserManager();
+        LoginFrame loginFrame = new LoginFrame(400, 250, userManager);
+        loginFrame.setVisible(true);
     }
 }
