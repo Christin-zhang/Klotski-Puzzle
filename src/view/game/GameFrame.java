@@ -42,6 +42,20 @@ public class GameFrame extends JFrame {
         //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    }
+        }
+    
+        private User currentUser;
+        private JButton saveBtn;
 
+        public GameFrame(int width, int height, User user) {
+            this.currentUser = user;
+            saveBtn = FrameUtil.createButton(this, "保存", new Point(gamePanel.getWidth() + 80, 300), 80, 50);
+            saveBtn.setEnabled(user != null);
+            saveBtn.addActionListener(e -> {
+                if (currentUser == null) {
+                    JOptionPane.showMessageDialog(this, "访客无法保存游戏", "错误", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            });
+        }
 }
