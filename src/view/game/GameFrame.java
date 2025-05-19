@@ -44,10 +44,10 @@ public class GameFrame extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         }
     
-        private User currentUser;
+        private model.User currentUser;
         private JButton saveBtn;
 
-        public GameFrame(int width, int height, User user) {
+        public GameFrame(int width, int height, model.User user) {
             this.currentUser = user;
             saveBtn = FrameUtil.createButton(this, "保存", new Point(gamePanel.getWidth() + 80, 300), 80, 50);
             saveBtn.setEnabled(user != null);
