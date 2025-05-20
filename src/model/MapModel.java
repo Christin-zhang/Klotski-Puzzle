@@ -78,5 +78,4 @@ public class MapModel {
         int newId = getId(nextRow, nextCol);
         return (newId == 0);
     }
-
 }
