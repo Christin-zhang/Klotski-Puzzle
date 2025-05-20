@@ -5,8 +5,6 @@ import model.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LoginFrame extends JFrame {
     private JTextField usernameField;
@@ -58,6 +56,11 @@ public class LoginFrame extends JFrame {
         String username = usernameField.getText().trim();
         String password = new String(passwordField.getPassword());
 
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "请输入用户名和密码", "输入错误", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         User user = UserController.login(username, password);
         if (user != null) {
             JOptionPane.showMessageDialog(this, "登录成功：" + user.getUsername());
@@ -71,6 +74,11 @@ public class LoginFrame extends JFrame {
     private void handleRegister() {
         String username = usernameField.getText().trim();
         String password = new String(passwordField.getPassword());
+
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "请输入用户名和密码", "输入错误", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         if (UserController.register(username, password)) {
             JOptionPane.showMessageDialog(this, "注册成功，请登录！");
