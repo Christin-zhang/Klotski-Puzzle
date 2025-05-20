@@ -78,4 +78,13 @@ public class MapModel {
         int newId = getId(nextRow, nextCol);
         return (newId == 0);
     }
+
+    public boolean isCaoCaoAtExit(){
+        if (matrix[4][1] == 4 && matrix[4][2] == 4) {
+            System.out.println("You win!");
+            return true;
+        }
+        else return false;
+    }
+
 }

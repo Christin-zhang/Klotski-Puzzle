@@ -5,8 +5,7 @@ import model.MapModel;
 import view.game.BoxComponent;
 import view.game.GamePanel;
 
-
-
+import javax.swing.*;
 /**
  * It is a bridge to combine GamePanel(view) and MapMatrix(model) in one game.
  * You can design several methods about the game logic in this class.
@@ -77,6 +76,12 @@ public class GameController {
             }
         }
         return false;
+    }
+
+    public void showVictory(){
+        int steps = view.getSteps();
+        String message = String.format("恭喜胜利！总步数: %d", steps);
+        JOptionPane.showMessageDialog(view, message, "胜利", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void repaintBox(int nextRow, int nextCol, GamePanel view){

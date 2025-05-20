@@ -43,6 +43,10 @@ public class GamePanel extends ListenerPanel {
                         {1, 1, 1, 1, 1}
      */
 
+    public int getSteps() {
+        return steps;
+    }
+
     public void initialGame() {
         this.steps = 0;
         //copy a map
@@ -158,6 +162,9 @@ public class GamePanel extends ListenerPanel {
     public void afterMove() {
         this.steps++;
         this.stepLabel.setText(String.format("Step: %d", this.steps));
+        if (model.isCaoCaoAtExit()){
+            controller.showVictory();
+        }
     }
 
     public void setStepLabel(JLabel stepLabel) {
