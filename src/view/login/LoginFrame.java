@@ -1,52 +1,91 @@
 package view.login;
 
-import view.FrameUtil;
-import view.game.GameFrame;
+import controller.UserController;
+import model.User;
 
 import javax.swing.*;
 import java.awt.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginFrame extends JFrame {
-    private JTextField username;
-    private JTextField password;
-    private JButton submitBtn;
-    private JButton resetBtn;
-    private GameFrame gameFrame;
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+    private JButton loginButton, registerButton, guestButton;
 
-
-    public LoginFrame(int width, int height) {
-        this.setTitle("Login Frame");
-        this.setLayout(null);
-        this.setSize(width, height);
-        JLabel userLabel = FrameUtil.createJLabel(this, new Point(50, 20), 70, 40, "username:");
-        JLabel passLabel = FrameUtil.createJLabel(this, new Point(50, 80), 70, 40, "password:");
-        username = FrameUtil.createJTextField(this, new Point(120, 20), 120, 40);
-        password = FrameUtil.createJTextField(this, new Point(120, 80), 120, 40);
-
-        submitBtn = FrameUtil.createButton(this, "Confirm", new Point(40, 140), 100, 40);
-        resetBtn = FrameUtil.createButton(this, "Reset", new Point(160, 140), 100, 40);
-
-        submitBtn.addActionListener(e -> {
-            System.out.println("Username = " + username.getText());
-            System.out.println("Password = " + password.getText());
-            if (this.gameFrame != null) {
-                this.gameFrame.setVisible(true);
-                this.setVisible(false);
-            }
-            //todo: check login info
-
-        });
-        resetBtn.addActionListener(e -> {
-            username.setText("");
-            password.setText("");
-        });
-
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    public LoginFrame() {
+        setTitle("Klotski 登录界面");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        initComponents();
     }
 
-    public void setGameFrame(GameFrame gameFrame) {
-        this.gameFrame = gameFrame;
+    private void initComponents() {
+        JPanel panel = new JPanel(new GridLayout(5, 1, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
+
+        usernameField = new JTextField();
+        passwordField = new JPasswordField();
+
+        loginButton = new JButton("登录");
+        registerButton = new JButton("注册");
+        guestButton = new JButton("以访客身份进入");
+
+        panel.add(createLabeledField("用户名：", usernameField));
+        panel.add(createLabeledField("密码：", passwordField));
+        panel.add(loginButton);
+        panel.add(registerButton);
+        panel.add(guestButton);
+
+        add(panel);
+
+        loginButton.addActionListener(e -> handleLogin());
+        registerButton.addActionListener(e -> handleRegister());
+        guestButton.addActionListener(e -> handleGuest());
+    }
+
+    private JPanel createLabeledField(String labelText, JComponent field) {
+        JPanel panel = new JPanel(new BorderLayout());
+        JLabel label = new JLabel(labelText);
+        panel.add(label, BorderLayout.WEST);
+        panel.add(field, BorderLayout.CENTER);
+        return panel;
+    }
+
+    private void handleLogin() {
+        String username = usernameField.getText().trim();
+        String password = new String(passwordField.getPassword());
+
+        User user = UserController.login(username, password);
+        if (user != null) {
+            JOptionPane.showMessageDialog(this, "登录成功：" + user.getUsername());
+            // TODO: 进入游戏主界面
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "用户名或密码错误", "错误", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void handleRegister() {
+        String username = usernameField.getText().trim();
+        String password = new String(passwordField.getPassword());
+
+        if (UserController.register(username, password)) {
+            JOptionPane.showMessageDialog(this, "注册成功，请登录！");
+        } else {
+            JOptionPane.showMessageDialog(this, "用户名已存在", "错误", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void handleGuest() {
+        JOptionPane.showMessageDialog(this, "以访客身份进入游戏");
+        // TODO: 创建 Guest 用户对象并跳转游戏
+        this.dispose();
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
     }
 }
