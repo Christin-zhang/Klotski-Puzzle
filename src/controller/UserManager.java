@@ -31,15 +31,26 @@ public class UserManager {
     }
 
     private static void saveUsersToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(USER_FILE))) {
-            for (User user : users.values()) {
-                writer.write(user.toString());
-                writer.newLine();
+        try {
+            // 确保目录存在
+            File file = new File(USER_FILE);
+            File parentDir = file.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+
+            // 写入文件
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                for (User user : users.values()) {
+                    writer.write(user.toString());
+                    writer.newLine();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     public static boolean register(String username, String password) {
         if (users.containsKey(username)) return false; // 用户名已存在

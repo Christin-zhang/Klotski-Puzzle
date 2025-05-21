@@ -66,6 +66,7 @@ public class LoginFrame extends JFrame {
             JOptionPane.showMessageDialog(this, "登录成功：" + user.getUsername());
             // TODO: 进入游戏主界面
             this.dispose();
+            new GameStartUI(user).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "用户名或密码错误", "错误", JOptionPane.ERROR_MESSAGE);
         }
@@ -90,6 +91,7 @@ public class LoginFrame extends JFrame {
     private void handleGuest() {
         JOptionPane.showMessageDialog(this, "以访客身份进入游戏");
         // TODO: 创建 Guest 用户对象并跳转游戏
+        new GameStartUI(null).setVisible(true);
         this.dispose();
     }
 

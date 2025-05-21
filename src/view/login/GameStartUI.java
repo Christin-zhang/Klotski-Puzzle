@@ -33,8 +33,8 @@ public class GameStartUI extends JFrame {
         panel.add(welcomeLabel);
 
         newGameButton = new JButton("开始新游戏");
-        loadGameButton = new JButton("加载上次游戏");
-        logoutButton = new JButton("注销并返回登录");
+        loadGameButton = new JButton("回到上次游戏");
+        logoutButton = new JButton("退出登录");
         exitButton = new JButton("退出游戏");
 
         panel.add(newGameButton);
