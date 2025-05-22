@@ -1,38 +1,52 @@
 package model;
 
+import java.util.Arrays;
+
 /**
  * This class is to record the map of one game. For example:
  */
 public class MapModel {
-    int[][] matrix;
+    int[][] currentMatrix;
+    int[][] initialMatrix;
 
 
     public MapModel(int[][] matrix) {
-        this.matrix = matrix;
+        this.initialMatrix = deepCopy(matrix); // 深拷贝初始矩阵
+        this.currentMatrix = deepCopy(matrix);
+    }
+
+    // 重置矩阵到初始状态
+    public void resetMatrix() {
+        this.currentMatrix = deepCopy(initialMatrix);
+    }
+
+    // 深拷贝辅助方法
+    private int[][] deepCopy(int[][] matrix) {
+        return Arrays.stream(matrix).map(int[]::clone).toArray(int[][]::new);
     }
 
     public int getWidth() {
-        return this.matrix[0].length;
+        return this.currentMatrix[0].length;
     }
 
     public int getHeight() {
-        return this.matrix.length;
+        return this.currentMatrix.length;
     }
 
     public int getId(int row, int col) {
-        return matrix[row][col];
+        return currentMatrix[row][col];
     }
 
-    public int[][] getMatrix() {
-        return matrix;
+    public int[][] getCurrentMatrix() {
+        return currentMatrix;
     }
 
     public boolean checkInWidthSize(int col) {
-        return col >= 0 && col < matrix[0].length;
+        return col >= 0 && col < currentMatrix[0].length;
     }
 
     public boolean checkInHeightSize(int row) {
-        return row >= 0 && row < matrix.length;
+        return row >= 0 && row < currentMatrix.length;
     }
 
     public boolean canMove(int row, int col, Direction dir){
@@ -80,7 +94,7 @@ public class MapModel {
     }
 
     public boolean isCaoCaoAtExit(){
-        if (matrix[4][1] == 4 && matrix[4][2] == 4) {
+        if (currentMatrix[4][1] == 4 && currentMatrix[4][2] == 4) {
             System.out.println("You win!");
             return true;
         }

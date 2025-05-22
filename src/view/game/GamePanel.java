@@ -183,4 +183,24 @@ public class GamePanel extends ListenerPanel {
     public int getGRID_SIZE() {
         return GRID_SIZE;
     }
+
+    public void resetSteps() {
+        steps = 0;
+        if (stepLabel != null) {
+            stepLabel.setText("Steps: 0");
+        }
+    }
+
+    public void refresh() {
+        // 清除现有方块
+        boxes.forEach(this::remove); // 移除所有方块组件
+        boxes.clear();
+
+        // 重新初始化游戏
+        initialGame(); // 调用原有的初始化方法
+
+        // 强制重绘
+        revalidate();
+        repaint();
+    }
 }

@@ -15,7 +15,7 @@ public class Main {
                     {3, 0, 0, 3}
             });
             GameFrame gameFrame = new GameFrame(600, 450, mapModel);
-            gameFrame.setVisible(false);
+            gameFrame.setVisible(true);
             new LoginFrame().setVisible(true);
         });
 

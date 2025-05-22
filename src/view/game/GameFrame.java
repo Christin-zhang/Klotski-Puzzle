@@ -20,6 +20,8 @@ public class GameFrame extends JFrame {
         this.setTitle("2025 CS109 Project Demo");
         this.setLayout(null);//我们采用的是绝对布局，按照像素点，在指定位置进行渲染
         this.setSize(width, height);//通过构造方法传递进来的尺寸
+        //置顶游戏界面
+        this.setAlwaysOnTop(true);
         gamePanel = new GamePanel(mapModel);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
