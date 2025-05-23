@@ -22,6 +22,7 @@ public class GamePanel extends ListenerPanel {
     private int steps;
     private final int GRID_SIZE = 50;
     private BoxComponent selectedBox;//记录哪一个箱子被选中
+    private boolean hasWon = false;
 
 
     public GamePanel(MapModel model) {
@@ -162,8 +163,9 @@ public class GamePanel extends ListenerPanel {
     public void afterMove() {
         this.steps++;
         this.stepLabel.setText(String.format("Step: %d", this.steps));
-        if (model.isCaoCaoAtExit()){
+        if (!hasWon && model.isCaoCaoAtExit()){
             controller.showVictory();
+            hasWon = true;
         }
     }
 
@@ -189,6 +191,7 @@ public class GamePanel extends ListenerPanel {
         if (stepLabel != null) {
             stepLabel.setText("Steps: 0");
         }
+        hasWon = false;
     }
 
     public void refresh() {
