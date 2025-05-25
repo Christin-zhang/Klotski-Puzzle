@@ -100,5 +100,4 @@ public class MapModel {
         }
         else return false;
     }
-
 }

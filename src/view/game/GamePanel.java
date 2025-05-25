@@ -24,7 +24,6 @@ public class GamePanel extends ListenerPanel {
     private BoxComponent selectedBox;//记录哪一个箱子被选中
     private boolean hasWon = false;
 
-
     public GamePanel(MapModel model) {
         boxes = new ArrayList<>();
         this.setVisible(true);
@@ -35,15 +34,6 @@ public class GamePanel extends ListenerPanel {
         this.selectedBox = null;
         initialGame();
     }
-
-    /*
-                        {1, 2, 2, 1, 1},
-                        {3, 4, 4, 2, 2},
-                        {3, 4, 4, 1, 0},
-                        {1, 2, 2, 1, 0},
-                        {1, 1, 1, 1, 1}
-     */
-
     public int getSteps() {
         return steps;
     }
@@ -194,15 +184,14 @@ public class GamePanel extends ListenerPanel {
         hasWon = false;
     }
 
+    public void setHasWon(boolean hasWon) {
+        this.hasWon = hasWon;
+    }
+
     public void refresh() {
-        // 清除现有方块
-        boxes.forEach(this::remove); // 移除所有方块组件
+        boxes.forEach(this::remove);
         boxes.clear();
-
-        // 重新初始化游戏
-        initialGame(); // 调用原有的初始化方法
-
-        // 强制重绘
+        initialGame();
         revalidate();
         repaint();
     }

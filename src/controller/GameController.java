@@ -85,6 +85,7 @@ public class GameController {
         int steps = view.getSteps();
         String message = String.format("恭喜胜利！总步数: %d", steps);
         JOptionPane.showMessageDialog(view, message, "胜利", JOptionPane.INFORMATION_MESSAGE);
+        view.setHasWon(true);
     }
 
     public static void repaintBox(int nextRow, int nextCol, GamePanel view){
@@ -95,6 +96,20 @@ public class GameController {
         box.repaint();
     }
 
-    //todo: add other methods such as loadGame, saveGame...
+    public void handleMove(Direction dir) {
+        view.requestFocusInWindow();
 
+        BoxComponent selectedBox = view.getSelectedBox();
+        if (selectedBox == null) {
+            JOptionPane.showMessageDialog(view, "请先选中一个方块！");
+            return;
+        }
+        int row = selectedBox.getRow();
+        int col = selectedBox.getCol();
+        if (doMove(row, col, dir)) {
+            view.afterMove();
+            view.refresh();   // 刷新界面
+        }
+    }
+    //todo: add other methods such as loadGame, saveGame...
 }
