@@ -184,6 +184,7 @@ public class GamePanel extends ListenerPanel {
         hasWon = false;
     }
 
+
     public void setHasWon(boolean hasWon) {
         this.hasWon = hasWon;
     }

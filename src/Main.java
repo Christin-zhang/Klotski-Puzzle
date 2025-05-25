@@ -18,6 +18,5 @@ public class Main {
             gameFrame.setVisible(true);
             new LoginFrame().setVisible(true);
         });
-
     }
 }

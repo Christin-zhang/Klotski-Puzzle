@@ -92,7 +92,6 @@ public class MapModel {
         int newId = getId(nextRow, nextCol);
         return (newId == 0);
     }
-
     public boolean isCaoCaoAtExit(){
         if (currentMatrix[4][1] == 4 && currentMatrix[4][2] == 4) {
             System.out.println("You win!");

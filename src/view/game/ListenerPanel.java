@@ -45,5 +45,4 @@ public abstract class ListenerPanel extends JPanel {
 
     public abstract void doMoveDown();
 
-
 }

@@ -10,7 +10,6 @@ public class BoxComponent extends JComponent {
     private int col;
     private boolean isSelected;
 
-
     public BoxComponent(Color color, int row, int col) {
         this.color = color;
         this.row = row;

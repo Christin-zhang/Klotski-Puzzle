@@ -88,6 +88,7 @@ public class GameController {
         view.setHasWon(true);
     }
 
+
     public static void repaintBox(int nextRow, int nextCol, GamePanel view){
         BoxComponent box = view.getSelectedBox();
         box.setRow(nextRow);
