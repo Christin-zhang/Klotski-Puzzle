@@ -14,6 +14,11 @@ public class Main {
                     {3, 4, 4, 3},
                     {3, 1, 1, 3}
             });
+            /*
+            int frameWidth = mapModel.getWidth() * 70 + 200;
+            int frameHeight = mapModel.getHeight() * 70 + 100;
+
+             */
             GameFrame gameFrame = new GameFrame(600, 450, mapModel);
             gameFrame.setVisible(true);
             new LoginFrame().setVisible(true);
