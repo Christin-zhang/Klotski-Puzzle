@@ -99,4 +99,22 @@ public class MapModel {
         }
         else return false;
     }
+
+    public int[][] getCurrentMatrixCopy() {
+        int h = getHeight();
+        int w = getWidth();
+        int[][] copy = new int[h][w];
+        for (int i = 0; i < h; i++) {
+            System.arraycopy(this.currentMatrix[i], 0, copy[i], 0, w);
+        }
+        return copy;
+    }
+
+    public void setCurrentMatrix(int[][] matrix) {
+        this.currentMatrix = new int[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            System.arraycopy(matrix[i], 0, this.currentMatrix[i], 0, matrix[i].length);
+        }
+    }
+
 }

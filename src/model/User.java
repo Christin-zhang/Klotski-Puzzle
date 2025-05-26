@@ -13,6 +13,11 @@ public class User implements Serializable {
         this.saveFilePath = "resources/saves/" + username + "_save.dat";
     }
 
+    public static User guest() {
+        return new User("Guest", null); // 或者用特殊标记判断是否访客
+    }
+
+
     public String getUsername() {
         return username;
     }

@@ -4,7 +4,13 @@ import controller.GameController;
 import model.Direction;
 import model.MapModel;
 import view.FrameUtil;
+import model.User;
+import model.GameSave;
+import model.MoveRecord;
+import controller.GameSaveController;
 
+import java.util.List;
+import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -20,7 +26,14 @@ public class GameFrame extends JFrame {
     private GamePanel gamePanel;
     private JButton upBtn, downBtn, leftBtn, rightBtn;
 
-    public GameFrame(int width, int height, MapModel mapModel) {
+    private MapModel mapModel;
+    private User user;
+    private int steps;
+    private List<MoveRecord> history;
+
+
+    public GameFrame(int width, int height, MapModel mapModel, User user, int steps) {
+
         this.setTitle("Klotski Puzzle");
         this.setLayout(null);//我们采用的是绝对布局，按照像素点，在指定位置进行渲染
         this.setSize(width, height);//通过构造方法传递进来的尺寸
@@ -64,7 +77,7 @@ public class GameFrame extends JFrame {
         public GameFrame(int width, int height, model.User user) {
             this.currentUser = user;
             saveBtn = FrameUtil.createButton(this, "保存", new Point(gamePanel.getWidth() + 80, 300), 80, 50);
-            saveBtn.setEnabled(user != null);
+            saveBtn.setEnabled(user != null && !"Guest".equals(user.getUsername()));
             saveBtn.addActionListener(e -> {
                 if (currentUser == null) {
                     JOptionPane.showMessageDialog(this, "访客无法保存游戏", "错误", JOptionPane.ERROR_MESSAGE);
@@ -80,7 +93,30 @@ public class GameFrame extends JFrame {
             bindButtonActions(controller);
             this.setLocationRelativeTo(null);
             this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+            loadBtn = FrameUtil.createButton(this, "加载", new Point(gamePanel.getWidth() + 80, 360), 80, 50);
+            loadBtn.setEnabled(user != null && !"Guest".equals(user.getUsername()));
+            loadBtn.addActionListener(e -> controller.loadGame(currentUser));
         }//这里没有写button control，需要询问之后补上
+
+    public GameFrame(int width, int height, MapModel mapModel, User user, int steps, List<MoveRecord> history) {
+        super("Klotski 游戏界面");
+
+        setSize(width, height);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
+
+        // 保存字段（你要在 GameFrame 中声明它们）
+        this.mapModel = mapModel;
+        this.user = user;
+        this.steps = steps;
+        this.history = history;
+
+        // 初始化 UI
+        initComponents();
+    }
+
 
     private JButton createDirectionButton(String text, int x, int y) {
         JButton btn = new JButton(text);
@@ -107,6 +143,43 @@ public class GameFrame extends JFrame {
             gamePanel.requestFocusInWindow();
         });
     }
+
+    private void initComponents() {
+        // 清空内容面板
+        getContentPane().removeAll();
+        setLayout(null);
+
+        // 初始化游戏棋盘视图
+        GamePanel boardPanel = new GamePanel(mapModel);
+        boardPanel.setBounds(20, 20, mapModel.getWidth() * 70, mapModel.getHeight() * 70);
+        add(boardPanel);
+
+        // 显示步数信息
+        JLabel stepsLabel = new JLabel("步数: " + steps);
+        stepsLabel.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+        stepsLabel.setBounds(500, 20, 100, 30);
+        add(stepsLabel);
+
+        // 添加“保存游戏”按钮
+        JButton saveButton = new JButton("保存游戏");
+        saveButton.setBounds(500, 70, 100, 30);
+        add(saveButton);
+
+        saveButton.addActionListener(e -> {
+            try {
+                GameSave saveData = new GameSave(mapModel.getCurrentMatrixCopy(), steps, history); // 构造 GameSave 对象
+                GameSaveController.save(user.getUsername(), saveData); // 调用已有 save 方法
+                JOptionPane.showMessageDialog(this, "保存成功！");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "保存失败: " + ex.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+
+        repaint();
+        revalidate();
+    }
+
 
 }
 

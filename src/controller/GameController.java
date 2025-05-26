@@ -5,6 +5,14 @@ import model.MapModel;
 import view.game.BoxComponent;
 import view.game.GamePanel;
 
+import model.GameSave;
+import model.MoveRecord;
+import model.User;
+import javax.swing.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.*;
 /**
  * It is a bridge to combine GamePanel(view) and MapMatrix(model) in one game.
@@ -13,6 +21,56 @@ import javax.swing.*;
 public class GameController {
     private final GamePanel view;
     private final MapModel model;
+
+    private List<MoveRecord> moveHistory = new ArrayList<>();
+
+    public void saveGame(User user) {
+        if (user == null || "Guest".equals(user.getUsername())) {
+            JOptionPane.showMessageDialog(view, "访客无法保存游戏", "错误", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String path = user.getSaveFilePath();
+
+        new File(path).getParentFile().mkdirs();
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
+            GameSave save = new GameSave(model.getCurrentMatrixCopy(), view.getSteps(), moveHistory);
+            oos.writeObject(save);
+            JOptionPane.showMessageDialog(view, "游戏已成功保存！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(view, "保存失败: " + e.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void loadGame(User user) {
+        if (user == null || "Guest".equals(user.getUsername())) {
+            JOptionPane.showMessageDialog(view, "访客无法加载存档", "提示", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        String path = user.getSaveFilePath();
+        File file = new File(path);
+        if (!file.exists()) {
+            JOptionPane.showMessageDialog(view, "未找到存档文件。", "提示", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            GameSave save = (GameSave) ois.readObject();
+
+            model.setCurrentMatrix(save.getMatrix());
+            view.resetSteps();
+
+            for (int i = 0; i < save.getSteps(); i++) {
+                view.afterMove();
+            }
+
+            this.moveHistory = new ArrayList<>(save.getHistory());
+            view.refresh();
+            JOptionPane.showMessageDialog(view, "存档加载成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(view, "加载失败，存档文件可能已损坏。", "错误", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     public GameController(GamePanel view, MapModel model) {
         this.view = view;
@@ -108,9 +166,10 @@ public class GameController {
         int row = selectedBox.getRow();
         int col = selectedBox.getCol();
         if (doMove(row, col, dir)) {
+            moveHistory.add(new MoveRecord(row, col, dir));
             view.afterMove();
             view.refresh();   // 刷新界面
         }
     }
-    //todo: add other methods such as loadGame, saveGame...
+
 }

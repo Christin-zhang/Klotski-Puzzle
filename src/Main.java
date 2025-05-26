@@ -1,7 +1,9 @@
 import model.MapModel;
 import view.game.GameFrame;
 import view.login.LoginFrame;
+import model.User;
 
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class Main {
@@ -19,7 +21,16 @@ public class Main {
             int frameHeight = mapModel.getHeight() * 70 + 100;
 
              */
-            GameFrame gameFrame = new GameFrame(600, 450, mapModel);
+            GameFrame gameFrame = new GameFrame(
+                    600,
+                    450,
+                    mapModel,
+                    new User("Guest", ""), // 临时访客用户
+                    0,
+                    new ArrayList<>()      // 空历史
+            );
+            gameFrame.setVisible(true);
+
             gameFrame.setVisible(true);
             new LoginFrame().setVisible(true);
         });
