@@ -25,7 +25,7 @@ public class BoxComponent extends JComponent {
             else if (color == Color.BLUE) imageName = "general.png";
             else if (color == Color.GREEN) imageName = "CaoCao.png";
             if (!imageName.isEmpty()) {
-                this.image = new ImageIcon("resources/images/" + imageName).getImage();
+                this.image = new ImageIcon("resources/images/blocks1/" + imageName).getImage();
             }
         } catch (Exception e){
             e.printStackTrace();

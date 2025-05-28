@@ -40,13 +40,13 @@ public class GameFrame extends JFrame {
         //置顶游戏界面
         //this.setAlwaysOnTop(true);
         gamePanel = new GamePanel(mapModel);
-        gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
+        gamePanel.setLocation(70, height / 2 - gamePanel.getHeight() / 2 - 10);
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapModel);
 
-        this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
-        this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
-        this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
+        this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 320, 120), 80, 50);
+        this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 320, 210), 80, 50);
+        this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 320, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
 
         this.restartBtn.addActionListener(e -> {
@@ -60,10 +60,10 @@ public class GameFrame extends JFrame {
         });
         //todo: add other button here
         // 1. 创建方向按钮
-        upBtn = createDirectionButton("↑", 465, 100);
-        downBtn = createDirectionButton("↓", 465, 220);
-        leftBtn = createDirectionButton("←", 415, 160);
-        rightBtn = createDirectionButton("→", 515, 160);
+        upBtn = createDirectionButton("↑", 865, 400);
+        downBtn = createDirectionButton("↓", 865, 520);
+        leftBtn = createDirectionButton("←", 815, 460);
+        rightBtn = createDirectionButton("→", 915, 460);
 
         // 2. 绑定按钮事件
         bindButtonActions(controller);

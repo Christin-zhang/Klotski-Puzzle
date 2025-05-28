@@ -65,7 +65,7 @@ public class GameStartUI extends JFrame {
         });
 
         // 启动游戏主界面
-        GameFrame gameFrame = new GameFrame(600, 450, mapModel, user, 0); // 步数为0
+        GameFrame gameFrame = new GameFrame(1100, 825, mapModel, user, 0); // 步数为0
         gameFrame.setVisible(true);
         this.dispose();
     }
