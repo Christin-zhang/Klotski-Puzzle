@@ -4,11 +4,9 @@ import controller.GameController;
 import model.Direction;
 import model.MapModel;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +23,6 @@ public class GamePanel extends ListenerPanel {
     private final int GRID_SIZE = 120;
     private BoxComponent selectedBox;//记录哪一个箱子被选中
     private boolean hasWon = false;
-    //与board有关的
-    private Image boardBackground;
-    private int boardOffsetX; // 棋盘水平偏移量
-    private int boardOffsetY; // 棋盘垂直偏移量
-    private int boardWidth;   // 棋盘绘制宽度
-    private int boardHeight;  // 棋盘绘制高度
 
     public GamePanel(MapModel model) {
         boxes = new ArrayList<>();
@@ -94,53 +86,11 @@ public class GamePanel extends ListenerPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        // 转换为Graphics2D以获得更好效果
-        Graphics2D g2d = (Graphics2D)g;
-
-        // ---- 新增代码开始：绘制棋盘背景 ----
-        if (boardBackground != null) {
-            // 1. 保存当前绘图设置
-            Composite oldComposite = g2d.getComposite();
-
-            // 2. 绘制背景底色（可选，用于衬托透明棋盘）
-            g2d.setColor(new Color(245, 235, 215)); // 浅米色
-            g2d.fillRect(0, 0, getWidth(), getHeight());
-
-            // 3. 计算棋盘绘制位置（居中显示）
-            int imgWidth = boardBackground.getWidth(null);
-            int imgHeight = boardBackground.getHeight(null);
-            float scale = Math.min(
-                    getWidth() * 0.9f / imgWidth,
-                    getHeight() * 0.9f / imgHeight
-            );
-            int drawWidth = (int)(imgWidth * scale);
-            int drawHeight = (int)(imgHeight * scale);
-            int x = (getWidth() - drawWidth) / 2;
-            int y = (getHeight() - drawHeight) / 2;
-
-            // 4. 启用抗锯齿
-            g2d.setRenderingHint(
-                    RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
-
-            // 5. 绘制带透明通道的棋盘
-            g2d.drawImage(boardBackground,
-                    x, y, drawWidth, drawHeight, null);
-
-            // 6. 恢复原始绘图设置
-            g2d.setComposite(oldComposite);
-
-            // 保存棋盘位置供方块对齐使用
-            this.boardOffsetX = x;
-            this.boardOffsetY = y;
-            this.boardWidth = drawWidth;
-            this.boardHeight = drawHeight;
-        }
-        g.setColor(Color.LIGHT_GRAY);
+        g.setColor(new Color(245, 235, 215));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         Border border = BorderFactory.createLineBorder(Color.DARK_GRAY, 2);
         this.setBorder(border);
+        //感觉没有边框更好看！
     }
 
     @Override

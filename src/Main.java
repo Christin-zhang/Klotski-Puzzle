@@ -22,14 +22,14 @@ public class Main {
 
              */
             GameFrame gameFrame = new GameFrame(
-                    600,
-                    450,
+                    1100,
+                    825,
                     mapModel,
                     new User("Guest", ""), // 临时访客用户
                     0,
                     new ArrayList<>()      // 空历史
             );
-            //gameFrame.setVisible(true);
+            gameFrame.setVisible(true);
 
             //gameFrame.setVisible(true);
             new LoginFrame().setVisible(true);

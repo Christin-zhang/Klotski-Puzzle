@@ -9,10 +9,14 @@ import model.GameSave;
 import model.MoveRecord;
 import controller.GameSaveController;
 
+import java.io.IOException;
+import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -30,13 +34,14 @@ public class GameFrame extends JFrame {
     private User user;
     private int steps;
     private List<MoveRecord> history;
-
+    private Image frameBackground;
+    private JLayeredPane layeredPane;
 
     public GameFrame(int width, int height, MapModel mapModel, User user, int steps) {
 
         this.setTitle("Klotski Puzzle");
-        this.setLayout(null);//我们采用的是绝对布局，按照像素点，在指定位置进行渲染
-        this.setSize(width, height);//通过构造方法传递进来的尺寸
+        this.setLayout(null);
+        this.setSize(width, height);
         //置顶游戏界面
         //this.setAlwaysOnTop(true);
         gamePanel = new GamePanel(mapModel);
@@ -69,7 +74,7 @@ public class GameFrame extends JFrame {
         bindButtonActions(controller);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        }
+    }
     
         private model.User currentUser;
         private JButton saveBtn;
@@ -175,12 +180,9 @@ public class GameFrame extends JFrame {
             }
         });
 
-
         repaint();
         revalidate();
     }
-
-
 }
 
 

@@ -2,7 +2,13 @@ package view.game;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import javax.swing.Timer;
+import java.util.TimerTask;
 
 public class BoxComponent extends JComponent {
     private Color color;//保留颜色作为备用
@@ -47,10 +53,18 @@ public class BoxComponent extends JComponent {
         }
 
         Border border ;
-        if(isSelected){
-            border = BorderFactory.createLineBorder(Color.red,3);
-        }else {
-            border = BorderFactory.createLineBorder(Color.DARK_GRAY, 1);
+        // 创建灰色蚀刻边框
+        if(isSelected) {
+            Border outer1 = BorderFactory.createRaisedBevelBorder();
+            Border inner1 = BorderFactory.createRaisedBevelBorder();
+            Border inner2 = BorderFactory.createCompoundBorder(outer1, inner1);
+            Border outer2 = BorderFactory.createLineBorder(new Color(156, 108, 60), 5);
+            border = BorderFactory.createCompoundBorder(outer2, inner2);
+        }
+        else {
+            Border outer = BorderFactory.createLoweredBevelBorder();
+            Border inner = BorderFactory.createLoweredBevelBorder();
+            border = BorderFactory.createCompoundBorder(outer, inner);
         }
         this.setBorder(border);
     }
