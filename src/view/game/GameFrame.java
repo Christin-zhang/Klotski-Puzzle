@@ -9,16 +9,9 @@ import model.GameSave;
 import model.MoveRecord;
 import controller.GameSaveController;
 
-import java.io.IOException;
-import java.io.File;
 import java.util.List;
-import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class GameFrame extends JFrame {
 
@@ -38,17 +31,26 @@ public class GameFrame extends JFrame {
     private JLayeredPane layeredPane;
 
     public GameFrame(int width, int height, MapModel mapModel, User user, int steps) {
+        //初始化界面
+        initJFrame(width, height);
+        //初始化gamePanel
+        initGamePanel(height, mapModel);
+        //初始化按钮
+        initButton();
+        //初始化菜单
+        initJMenuBar();
+        //显示界面，写在最后
+        this.setVisible(true);
+    }
 
-        this.setTitle("Klotski Puzzle");
-        this.setLayout(null);
-        this.setSize(width, height);
-        //置顶游戏界面
-        //this.setAlwaysOnTop(true);
+    private void initGamePanel(int height, MapModel mapModel) {
         gamePanel = new GamePanel(mapModel);
         gamePanel.setLocation(70, height / 2 - gamePanel.getHeight() / 2 - 10);
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapModel);
+    }
 
+    private void initButton() {
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 320, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 320, 210), 80, 50);
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 320, 70), 180, 50);
@@ -69,14 +71,60 @@ public class GameFrame extends JFrame {
         downBtn = createDirectionButton("↓", 865, 520);
         leftBtn = createDirectionButton("←", 815, 460);
         rightBtn = createDirectionButton("→", 915, 460);
-
         // 2. 绑定按钮事件
         bindButtonActions(controller);
+    }
+
+    private void initJMenuBar() {
+        //初始化游戏界面内的菜单
+        //创建整个的菜单对象
+        JMenuBar jMenuBar = new JMenuBar();
+        //创建菜单上面的几个选项的对象：风格切换/模式切换/难度切换
+        JMenu styleJMenu = new JMenu("风格切换");
+        JMenu modeJMenu = new JMenu("模式切换");
+        JMenu difficultyJMenu = new JMenu("难度切换");
+        //创建选项下面的条目对象
+        JMenuItem bgItem = new JMenuItem("背景切换");
+        //TODO:add backgrounds choices;
+        JMenuItem blockItem = new JMenuItem("滑块样式");
+        //TODO:add block styles choices;
+        JMenuItem unlimitedItem = new JMenuItem("无尽解题");
+        JMenuItem stepsLimitedItem = new JMenuItem("步数挑战");
+        JMenuItem timeLimitedItem = new JMenuItem("限时挑战");
+
+        JMenuItem easyItem = new JMenuItem("简单");
+        JMenuItem normalItem = new JMenuItem("普通");
+        JMenuItem hellItem = new JMenuItem("地狱");
+        //将每一个条目添加到选项当中
+        styleJMenu.add(bgItem);
+        styleJMenu.add(blockItem);
+
+        modeJMenu.add(unlimitedItem);
+        modeJMenu.add(stepsLimitedItem);
+        modeJMenu.add(timeLimitedItem);
+
+        difficultyJMenu.add(easyItem);
+        difficultyJMenu.add(normalItem);
+        difficultyJMenu.add(hellItem);
+        //将菜单中三个选项添加到菜单中
+        jMenuBar.add(styleJMenu);
+        jMenuBar.add(modeJMenu);
+        jMenuBar.add(difficultyJMenu);
+        //给整个界面设置菜单
+        this.setJMenuBar(jMenuBar);
+    }
+
+    private void initJFrame(int width, int height) {
+        this.setTitle("Klotski Puzzle");
+        this.setLayout(null);
+        this.setSize(width, height);
+        //置顶游戏界面
+        //this.setAlwaysOnTop(true);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
-    
-        private model.User currentUser;
+
+    private model.User currentUser;
         private JButton saveBtn;
 
         public GameFrame(int width, int height, model.User user) {

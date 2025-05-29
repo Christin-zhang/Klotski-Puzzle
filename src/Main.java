@@ -29,7 +29,7 @@ public class Main {
                     0,
                     new ArrayList<>()      // 空历史
             );
-            gameFrame.setVisible(true);
+            //gameFrame.setVisible(true);
 
             //gameFrame.setVisible(true);
             new LoginFrame().setVisible(true);
