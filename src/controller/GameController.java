@@ -86,10 +86,10 @@ public class GameController {
     }
 
     public boolean doMove(int row, int col, Direction direction) {
+        int nextRow = row + direction.getRow();
+        int nextCol = col + direction.getCol();
         if (model.getId(row, col) == 1) {
             if (model.canMove(row, col, direction)) {
-                int nextRow = row + direction.getRow();
-                int nextCol = col + direction.getCol();
                 model.getCurrentMatrix()[row][col] = 0;
                 model.getCurrentMatrix()[nextRow][nextCol] = 1;
                 repaintBox(nextRow, nextCol, view);
@@ -98,8 +98,6 @@ public class GameController {
         }
         if (model.getId(row, col) == 2){
             if (model.canMove(row, col, direction)){
-                int nextRow = row + direction.getRow();
-                int nextCol = col + direction.getCol();
                 model.getCurrentMatrix()[row][col] = 0;
                 model.getCurrentMatrix()[row][col + 1] = 0;
                 model.getCurrentMatrix()[nextRow][nextCol] = 2;
@@ -110,8 +108,6 @@ public class GameController {
         }
         if (model.getId(row, col) == 3){
             if (model.canMove(row, col, direction)){
-                int nextRow = row + direction.getRow();
-                int nextCol = col + direction.getCol();
                 model.getCurrentMatrix()[row][col] = 0;
                 model.getCurrentMatrix()[row + 1][col] = 0;
                 model.getCurrentMatrix()[nextRow][nextCol] = 3;
@@ -122,8 +118,6 @@ public class GameController {
         }
         if (model.getId(row, col) == 4){
             if (model.canMove(row, col, direction)){
-                int nextRow = row + direction.getRow();
-                int nextCol = col + direction.getCol();
                 model.getCurrentMatrix()[row][col] = 0;
                 model.getCurrentMatrix()[row + 1][col] = 0;
                 model.getCurrentMatrix()[row][col + 1] = 0;

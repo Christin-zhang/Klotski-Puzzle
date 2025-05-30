@@ -75,6 +75,7 @@ public class GamePanel extends ListenerPanel {
                 }
                 if (box != null) {
                     box.setLocation(j * GRID_SIZE + 2, i * GRID_SIZE + 2);
+                    //box.setCurrentPosition(j * GRID_SIZE, i * GRID_SIZE);
                     boxes.add(box);
                     this.add(box);
                 }
@@ -197,5 +198,14 @@ public class GamePanel extends ListenerPanel {
         revalidate();
         repaint();
     }
-
+/*
+    public BoxComponent getBoxAt(int id, int row, int col) {
+        Color here;
+        if (id == 1) here = Color.ORANGE;
+        else if (id == 2) here = Color.PINK;
+        else if (id == 3) here = Color.BLUE;
+        else  here = Color.GREEN;
+        return new BoxComponent(here, row, col);
+    }
+ */
 }
