@@ -16,22 +16,7 @@ public class Main {
                     {3, 4, 4, 3},
                     {3, 1, 1, 3}
             });
-            /*
-            int frameWidth = mapModel.getWidth() * 70 + 200;
-            int frameHeight = mapModel.getHeight() * 70 + 100;
 
-             */
-            GameFrame gameFrame = new GameFrame(
-                    1100,
-                    825,
-                    mapModel,
-                    new User("Guest", ""), // 临时访客用户
-                    0,
-                    new ArrayList<>()      // 空历史
-            );
-            //gameFrame.setVisible(true);
-
-            //gameFrame.setVisible(true);
             new LoginFrame().setVisible(true);
         });
     }
