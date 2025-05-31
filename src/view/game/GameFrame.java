@@ -53,7 +53,7 @@ public class GameFrame extends JFrame {
 
     private void initGamePanel(int height) {
         gamePanel = new GamePanel(mapModel);
-        gamePanel.setLocation(70, height / 2 - gamePanel.getHeight() / 2 - 10);
+        gamePanel.setLocation(100, height / 2 - gamePanel.getHeight() / 2 - 25);
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapModel);
 

@@ -1,5 +1,7 @@
 package view.game;
 
+import view.game.GamePanel;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -16,18 +18,33 @@ public class BoxComponent extends JComponent {
     private int col;
     private boolean isSelected;
     private Image image; //新的贴图属性
+    /*private int logicalRow;  // 逻辑位置行
+    private int logicalCol;  // 逻辑位置列
+    private Point visualPosition; // 视觉位置
+    private Timer animationTimer;
+    private float animationProgress;
+    private int GRID_SIZE = 120;
+
+     */
 
     public BoxComponent(Color color, int row, int col) {
         this.color = color;
         this.row = row;
         this.col = col;
         isSelected = false;
+        /*
+        this.logicalRow = row;
+        this.logicalCol = col;
+        this.visualPosition = new Point(col * 120, row * 120);
+        setLocation(visualPosition);
+
+         */
 
         //直接根据颜色选择图片加载，这样就不用改其他逻辑了
         try {
             String imageName = "";
             if (color == Color.ORANGE) imageName = "soldier.png";
-            else if (color == Color.PINK) imageName = "guanYu.png";
+            else if (color == Color.PINK) imageName = "GuanYu.png";
             else if (color == Color.BLUE) imageName = "general.png";
             else if (color == Color.GREEN) imageName = "CaoCao.png";
             if (!imageName.isEmpty()) {
@@ -35,6 +52,7 @@ public class BoxComponent extends JComponent {
             }
         } catch (Exception e){
             e.printStackTrace();
+            System.out.println("图片加载失败");
             this.image = null; //图片加载失败就算了
         }
     }
@@ -53,7 +71,6 @@ public class BoxComponent extends JComponent {
         }
 
         Border border ;
-        // 创建灰色蚀刻边框
         if(isSelected) {
             Border outer1 = BorderFactory.createRaisedBevelBorder();
             Border inner1 = BorderFactory.createRaisedBevelBorder();
@@ -68,6 +85,53 @@ public class BoxComponent extends JComponent {
         }
         this.setBorder(border);
     }
+/*
+    //动画部分代码
+    // 开始移动动画
+    public void startMoveAnimation(int targetRow, int targetCol, Runnable onComplete) {
+        Point targetPos = new Point(targetCol * GRID_SIZE, targetRow * GRID_SIZE);
+
+        if (animationTimer != null && animationTimer.isRunning()) {
+            animationTimer.stop();
+        }
+
+        animationProgress = 0f;
+        animationTimer = new Timer(16, e -> { // ~60fps
+            animationProgress += 0.1f; // 调整这个值改变动画速度
+            if (animationProgress >= 1f) {
+                animationProgress = 1f;
+                animationTimer.stop();
+                onComplete.run(); // 动画完成回调
+            }
+
+            // 使用缓动函数计算插值
+            float eased = easeOutCubic(animationProgress);
+
+            // 计算中间位置
+            int newX = (int)(visualPosition.x + (targetPos.x - visualPosition.x) * eased);
+            int newY = (int)(visualPosition.y + (targetPos.y - visualPosition.y) * eased);
+
+            visualPosition.setLocation(newX, newY);
+            setLocation(visualPosition);
+            repaint();
+        });
+        animationTimer.start();
+    }
+
+    // 立方缓出函数 - 更平滑的动画效果
+    private float easeOutCubic(float t) {
+        return (float)(1 - Math.pow(1 - t, 3));
+    }
+
+    // 立即更新逻辑位置（无动画）
+    public void setLogicalPosition(int row, int col) {
+        this.logicalRow = row;
+        this.logicalCol = col;
+        this.visualPosition.setLocation(col * GRID_SIZE, row * GRID_SIZE);
+        setLocation(visualPosition);
+    }
+
+ */
 
     public void setSelected(boolean selected) {
         isSelected = selected;
@@ -89,4 +153,9 @@ public class BoxComponent extends JComponent {
     public void setCol(int col) {
         this.col = col;
     }
+/*
+    // 获取逻辑位置
+    public int getLogicalRow() { return logicalRow; }
+    public int getLogicalCol() { return logicalCol; }
+*/
 }
