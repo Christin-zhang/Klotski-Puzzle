@@ -48,7 +48,6 @@ public class GamePanel extends ListenerPanel {
     }
 
     public void initialGame() {
-        //this.steps = 0;
         //copy a map
         int[][] map = new int[model.getHeight()][model.getWidth()];
         for (int i = 0; i < map.length; i++) {
