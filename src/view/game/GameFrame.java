@@ -56,6 +56,8 @@ public class GameFrame extends JFrame {
         gamePanel.setLocation(70, height / 2 - gamePanel.getHeight() / 2 - 10);
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapModel);
+
+        gamePanel.setSteps(this.steps);
     }
 
 

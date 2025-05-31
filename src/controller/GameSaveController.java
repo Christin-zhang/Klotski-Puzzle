@@ -10,22 +10,20 @@ public class GameSaveController {
     private static final String SAVE_FOLDER = "saves";
 
     // 保存
-    public static void save(String username, GameSave saveData) {
+    public static void save(String username, GameSave saveData) throws IOException {
         if (username == null || username.equals("Guest")) return;
 
-        File dir = new File(SAVE_FOLDER);
+        File dir = new File("resources/saves/");
         if (!dir.exists()) {
-            dir.mkdirs();
+            dir.mkdirs();  // 自动创建目录
         }
 
-        File saveFile = new File(dir, username + ".sav");
-
+        File saveFile = new File(dir, username + "_save.dat");
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(saveFile))) {
             oos.writeObject(saveData);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
+
 
     // 加载
     public static GameSave load(String username) throws IOException, ClassNotFoundException {

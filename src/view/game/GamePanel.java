@@ -34,12 +34,21 @@ public class GamePanel extends ListenerPanel {
         this.selectedBox = null;
         initialGame();
     }
+
+    public void setSteps(int steps) {
+        this.steps = steps;
+        if (stepLabel != null) {
+            stepLabel.setText("Step: " + steps);
+        }
+    }
+
+
     public int getSteps() {
         return steps;
     }
 
     public void initialGame() {
-        this.steps = 0;
+        //this.steps = 0;
         //copy a map
         int[][] map = new int[model.getHeight()][model.getWidth()];
         for (int i = 0; i < map.length; i++) {

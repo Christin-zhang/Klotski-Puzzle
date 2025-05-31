@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class GameStartUI extends JFrame {
     private User user;
-    private JButton newGameButton, loadGameButton, logoutButton, exitButton;
+    private JButton newGameButton,  logoutButton, exitButton;
 
     public GameStartUI(User user) {
         this.user = user;
@@ -37,19 +37,16 @@ public class GameStartUI extends JFrame {
         panel.add(welcomeLabel);
 
         newGameButton = new JButton("开始新游戏");
-        loadGameButton = new JButton("回到上次游戏");
         logoutButton = new JButton("退出登录");
         exitButton = new JButton("退出游戏");
 
         panel.add(newGameButton);
-        panel.add(loadGameButton);
         panel.add(logoutButton);
         panel.add(exitButton);
 
         add(panel);
 
         newGameButton.addActionListener(e -> handleNewGame());
-        loadGameButton.addActionListener(e -> handleLoadGame());
         logoutButton.addActionListener(e -> handleLogout());
         exitButton.addActionListener(e -> System.exit(0));
     }
