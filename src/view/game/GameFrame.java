@@ -79,7 +79,7 @@ public class GameFrame extends JFrame {
 
         JButton undoBtn = FrameUtil.createButton(this, "上一步", new Point(baseX, baseY + 50), buttonWidth, buttonHeight);
         undoBtn.addActionListener(e -> {
-            //TODO:controller.undoLastMove();
+            controller.undoLastMove();
             gamePanel.requestFocusInWindow();
         });
 

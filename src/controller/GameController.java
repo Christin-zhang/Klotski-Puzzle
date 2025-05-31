@@ -133,6 +133,40 @@ public class GameController {
         return false;
     }
 
+    public void undoLastMove() {
+        if (moveHistory.isEmpty()) {
+            JOptionPane.showMessageDialog(view, "没有可以撤销的操作！");
+            return;
+        }
+
+        // 1. 取出最后一条记录并删除
+        MoveRecord lastMove = moveHistory.remove(moveHistory.size() - 1);
+
+        // 2. 反方向移动
+        Direction reverseDir = switch (lastMove.getDirection()) {
+            case UP -> Direction.DOWN;
+            case DOWN -> Direction.UP;
+            case LEFT -> Direction.RIGHT;
+            case RIGHT -> Direction.LEFT;
+        };
+
+        // 3. 算出反方向起始位置（实际当前位置）
+        int currentRow = lastMove.getRow() + lastMove.getDirection().getRow();
+        int currentCol = lastMove.getCol() + lastMove.getDirection().getCol();
+
+        // 4. 执行反方向移动（实际退回）
+        boolean success = doMove(currentRow, currentCol, reverseDir);
+
+        if (success) {
+            // 5. 步数减1
+            view.setSteps(view.getSteps() - 1);
+            view.refresh();
+        } else {
+            JOptionPane.showMessageDialog(view, "无法撤销这一步。");
+        }
+    }
+
+
     public void showVictory(){
         int steps = view.getSteps();
         String message = String.format("恭喜胜利！总步数: %d", steps);
