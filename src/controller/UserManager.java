@@ -30,7 +30,7 @@ public class UserManager {
         }
     }
 
-    private static void saveUsersToFile() {
+    public static void saveUsersToFile() {
         try {
             // 确保目录存在
             File file = new File(USER_FILE);

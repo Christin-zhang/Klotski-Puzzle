@@ -53,6 +53,8 @@ public class GameFrame extends JFrame {
 
     private void initGamePanel(int height) {
         gamePanel = new GamePanel(mapModel);
+        gamePanel.setUser(user);  // 设置当前用户
+
         gamePanel.setLocation(100, height / 2 - gamePanel.getHeight() / 2 - 25);
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapModel);

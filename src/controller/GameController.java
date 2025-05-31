@@ -4,6 +4,7 @@ import model.Direction;
 import model.MapModel;
 import view.game.BoxComponent;
 import view.game.GamePanel;
+import view.game.LeaderboardDialog;
 
 import model.GameSave;
 import model.MoveRecord;
@@ -172,6 +173,16 @@ public class GameController {
         String message = String.format("恭喜胜利！总步数: %d", steps);
         JOptionPane.showMessageDialog(view, message, "胜利", JOptionPane.INFORMATION_MESSAGE);
         view.setHasWon(true);
+
+        if (view.getUser() != null && !"Guest".equals(view.getUser().getUsername())) {
+            User user = view.getUser();
+            user.setLastVictorySteps(steps);
+            UserManager.saveUsersToFile(); // 保存用户信息
+        }
+
+        // 弹出排行榜
+        SwingUtilities.invokeLater(() -> new LeaderboardDialog(view.getUser()).setVisible(true));
+
     }
 
 

@@ -3,6 +3,7 @@ package view.game;
 import controller.GameController;
 import model.Direction;
 import model.MapModel;
+import model.User;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -23,6 +24,7 @@ public class GamePanel extends ListenerPanel {
     private final int GRID_SIZE = 120;
     private BoxComponent selectedBox;//记录哪一个箱子被选中
     private boolean hasWon = false;
+    private User user;
 
     public GamePanel(MapModel model) {
         boxes = new ArrayList<>();
@@ -46,6 +48,15 @@ public class GamePanel extends ListenerPanel {
     public int getSteps() {
         return steps;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
 
     public void initialGame() {
         //copy a map
